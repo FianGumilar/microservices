@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./pb";
+
+service UserService {
+    rpc FindAllUsers(PaginationRequest) returns (FindAllUsersResponse);
+    rpc InsertUser(InsertUserDTO) returns (UserResponse);
+    rpc FindUserByEmail(FindUsersByEmailRequest) returns (FindUsersResponse);
+    rpc FindUserByID(FindUsersByIDRequest) returns (FindUsersResponse);
+    rpc UpdateUser (UpdateUserRequest) returns (UserResponse);
+    rpc DeleteUser (DeleteUserRequest) returns (UserResponse); 
+}
+
+// Find User
+message FindUsersDTO {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4;
+    int32 created_at = 5;
+}
+
+// Find User Response
+message FindUsersResponse {
+    int32 code = 1;
+    string message = 2;
+    FindUsersDTO result = 3;
+}
+
+// User Response
+message UserResponse {
+    int32 code = 1;
+    string message = 2;
+}
+
+// Pagination
+message Pagination {
+    int32 total_data = 1;
+    int32 total_page = 2;
+    int32 page = 3;
+    int32 limit = 4;
+    int32 offset = 5;
+}
+
+message PaginationRequest {
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+// Find All Users
+message FindAllUsersDTO{
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    int32 created_at = 4;
+}
+
+message FindAllUsersResponse {
+    int32 code = 1;
+    string message = 2;
+    Pagination pagination = 3;
+    repeated FindAllUsersDTO result = 4;
+}
+
+message InsertUserDTO {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4;
+    int32 created_at = 5;
+    int32 updated_at = 6;
+}
+
+message FindUsersByEmailRequest {
+    string email = 1;
+}
+
+message FindUsersByIDRequest {
+    string id = 1;
+}
+
+message UpdateUserRequest {
+    string id = 1;
+    string name = 2;
+    string email = 3;
+    string password = 4;
+    int32 updated_at = 5;
+}
+
+message DeleteUserRequest {
+    string id = 1;
+}
